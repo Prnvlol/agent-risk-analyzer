@@ -7,16 +7,17 @@ ARA detects **20 vulnerability categories** across LangChain, CrewAI, AutoGen, a
 ```
 $ ara scan ./my-agent
 
-──────────────────── Agent Risk Analyzer ────────────────────
+──────────────────────────── Agent Risk Analyzer ────────────────────────────
   Target:  /path/to/my-agent
-  Files:   12 scanned  |  Duration: 0.04s  |  Framework: langchain
+  Files:   3 scanned  |  Duration: 0.04s  |  Framework: langchain
 
-  Grade   Score  🔴 Critical  🟠 High  🟡 Medium  ⚪ Low  Total
-    F       87        3          5        4          3      15
+  Grade   Score   🔴 Critical   🟠 High   🟡 Medium   ⚪ Low   Total
+    F      116         6            9          3          5       23
 
-╭──────────────────────────────────────────────────────────────╮
-│ Grade F  Score: 87  —  Unsafe for production                 │
-╰──────────────────────────────────────────────────────────────╯
+╭─────────────────────────────────────────────────────────────────────────────╮
+│ Grade F  Score: 116  —  Unsafe for production — critical issues must be     │
+│ fixed immediately.                                                           │
+╰─────────────────────────────────────────────────────────────────────────────╯
 ```
 
 ---
@@ -36,9 +37,9 @@ $ ara scan ./my-agent
 ## 📦 Installation
 
 ```bash
-# From source (recommended during alpha)
-git clone https://github.com/Prnvlol/AITools.git
-cd "AITools/Agent Risk Analyzer"
+# Clone the repo
+git clone https://github.com/Prnvlol/agent-risk-analyzer.git
+cd agent-risk-analyzer
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 ```

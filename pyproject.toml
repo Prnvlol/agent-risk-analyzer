@@ -44,8 +44,8 @@ dev = [
 ara = "src.cli:app"
 
 [project.urls]
-Repository = "https://github.com/Prnvlol/AITools"
-Issues = "https://github.com/Prnvlol/AITools/issues"
+Repository = "https://github.com/Prnvlol/agent-risk-analyzer"
+Issues = "https://github.com/Prnvlol/agent-risk-analyzer/issues"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]
