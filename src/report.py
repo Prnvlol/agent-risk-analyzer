@@ -127,48 +127,84 @@ def _print_findings(result: ScanResult) -> None:
     console.print(Rule("[bold]Findings[/bold]", style="dim"))
     console.print()
 
-    current_file = None
+    # Group findings by file
+    file_groups: dict[str, list[Finding]] = {}
+    for f in result.findings:
+        file_groups.setdefault(f.file_path, []).append(f)
 
-    for finding in result.findings:
-        # File header when we move to a new file
-        if finding.file_path != current_file:
-            current_file = finding.file_path
-            console.print(f"[bold cyan]📄 {finding.file_path}[/bold cyan]")
+    for file_path, findings in file_groups.items():
+        table = Table(
+            title=f"📄 {file_path}",
+            title_style="bold cyan",
+            show_header=True,
+            header_style="bold",
+            border_style="dim",
+            pad_edge=True,
+            expand=True,
+        )
+        table.add_column("#", style="dim", width=3, justify="right")
+        table.add_column("Severity", width=12, no_wrap=True)
+        table.add_column("Rule", style="cyan", width=9, no_wrap=True)
+        table.add_column("Finding", ratio=1, no_wrap=True, overflow="ellipsis")
+        table.add_column("Line", width=5, justify="right", style="dim")
 
-        _print_finding(finding)
+        for idx, f in enumerate(findings, start=1):
+            icon = SEVERITY_ICON[f.severity]
+            sev_style = f.severity.color
+            conf_tag = "✓" if f.confidence == Confidence.CONFIRMED else "?"
 
+            loc = str(f.line_number) if f.line_number else "—"
+
+            table.add_row(
+                str(idx),
+                f"{icon} [{sev_style}]{f.severity.value}[/{sev_style}] {conf_tag}",
+                f.vuln_id,
+                f"[bold]{f.title}[/bold]",
+                loc,
+            )
+
+        console.print(table)
+        console.print()
+
+    # Print detailed fix suggestions grouped by unique vuln_id
+    _print_fix_details(result)
+
+
+def _print_fix_details(result: ScanResult) -> None:
+    """Print a deduplicated table of fix suggestions keyed by vuln_id."""
+    seen: dict[str, Finding] = {}
+    for f in result.findings:
+        if f.vuln_id not in seen:
+            seen[f.vuln_id] = f
+
+    if not seen:
+        return
+
+    console.print(Rule("[bold]Remediation Guide[/bold]", style="dim"))
     console.print()
 
-
-def _print_finding(f: Finding) -> None:
-    sev_style = f.severity.color
-    icon = SEVERITY_ICON[f.severity]
-    conf_style = CONFIDENCE_STYLE[f.confidence]
-
-    # Title line
-    loc = f"line {f.line_number}" if f.line_number else "file-level"
-    console.print(
-        f"  {icon} [{sev_style}]{f.severity.value}[/{sev_style}]  "
-        f"[{conf_style}]{f.confidence.value}[/{conf_style}]  "
-        f"[bold]{f.title}[/bold]  "
-        f"[dim]({loc})[/dim]"
+    table = Table(
+        show_header=True,
+        header_style="bold",
+        border_style="dim",
+        expand=True,
     )
+    table.add_column("Rule", style="cyan", width=9, no_wrap=True)
+    table.add_column("Title", width=28)
+    table.add_column("Refs", style="dim", width=20, no_wrap=True)
+    table.add_column("Fix", ratio=1, style="green")
 
-    # Rule IDs
-    refs = f"[dim]{f.vuln_id}"
-    if f.atlas_id:
-        refs += f"  |  ATLAS {f.atlas_id}"
-    if f.owasp_ref:
-        refs += f"  |  OWASP {f.owasp_ref}"
-    refs += "[/dim]"
-    console.print(f"     {refs}")
+    for vuln_id, f in sorted(seen.items()):
+        refs_parts: list[str] = []
+        if f.atlas_id:
+            refs_parts.append(f.atlas_id)
+        if f.owasp_ref:
+            refs_parts.append(f.owasp_ref)
+        refs = " | ".join(refs_parts) if refs_parts else "—"
 
-    # Code snippet
-    if f.code_snippet:
-        console.print(f"     [on black dim]  {f.code_snippet}  [/on black dim]")
+        table.add_row(vuln_id, f.title, refs, f"💡 {f.fix_suggestion}")
 
-    # Fix
-    console.print(f"     [green]💡 {f.fix_suggestion}[/green]")
+    console.print(table)
     console.print()
 
 
