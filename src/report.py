@@ -240,8 +240,8 @@ def _build_markdown(result: ScanResult) -> list[str]:
     lines += [
         "# Agent Risk Analyzer — Security Report",
         "",
-        f"| | |",
-        f"|---|---|",
+        "| | |",
+        "|---|---|",
         f"| **Target** | `{result.target_path}` |",
         f"| **Grade** | **{result.grade}** (score: {result.score}) |",
         f"| **Files Scanned** | {result.files_scanned} |",
@@ -298,7 +298,7 @@ def _build_markdown(result: ScanResult) -> list[str]:
             "",
         ]
         if f.code_snippet:
-            lines += [f"```python", f"{f.code_snippet}", "```", ""]
+            lines += ["```python", f"{f.code_snippet}", "```", ""]
 
         lines += [f"**Fix:** {f.fix_suggestion}", "", "---", ""]
 

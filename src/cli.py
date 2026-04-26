@@ -9,9 +9,7 @@ Commands:
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
-from typing import Optional
 
 import typer
 from rich.console import Console
@@ -50,7 +48,7 @@ def scan(
         "--format", "-f",
         help="Output format: terminal | json | markdown",
     ),
-    output: Optional[Path] = typer.Option(
+    output: Path | None = typer.Option(
         None,
         "--output", "-o",
         help="Write report to this file (required for json/markdown formats).",
@@ -75,7 +73,7 @@ def scan(
         "--no-suspected",
         help="Only show CONFIRMED findings (hide heuristic/absence checks).",
     ),
-    disable: Optional[str] = typer.Option(
+    disable: str | None = typer.Option(
         None,
         "--disable",
         help="Comma-separated list of rule IDs or detector names to disable.",
@@ -100,7 +98,7 @@ def scan(
         min_sev = Severity(min_severity.upper())
     except ValueError:
         err_console.print(
-            f"[red]Error:[/red] --min-severity must be one of: CRITICAL, HIGH, MEDIUM, LOW"
+            "[red]Error:[/red] --min-severity must be one of: CRITICAL, HIGH, MEDIUM, LOW"
         )
         raise typer.Exit(2)
 
@@ -121,8 +119,8 @@ def scan(
     )
 
     # Run scan
-    from src.scanner import Scanner
     from src.report import print_terminal_report, write_json_report, write_markdown_report
+    from src.scanner import Scanner
 
     console.print(f"[dim]🔍 Scanning[/dim] [bold]{target}[/bold] [dim]...[/dim]")
 

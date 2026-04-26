@@ -5,7 +5,6 @@ from __future__ import annotations
 import pytest
 
 from src.detectors.mcp_config import MCPConfigDetector
-from src.models import Severity
 from tests.conftest import make_context
 
 

@@ -90,8 +90,8 @@ class BaseDetector(ABC):
         *,
         vuln_id: str,
         title: str,
-        severity: "Finding.__class__",  # type: ignore[assignment]
-        confidence: "Finding.__class__",  # type: ignore[assignment]
+        severity: Finding.__class__,  # type: ignore[assignment]
+        confidence: Finding.__class__,  # type: ignore[assignment]
         description: str,
         file_path: Path,
         line_number: int | None = None,

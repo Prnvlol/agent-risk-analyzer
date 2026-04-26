@@ -2,19 +2,18 @@
 
 from __future__ import annotations
 
-from enum import Enum
+from enum import StrEnum
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, Field
-
 
 # ---------------------------------------------------------------------------
 # Enums
 # ---------------------------------------------------------------------------
 
 
-class Severity(str, Enum):
+class Severity(StrEnum):
     CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
@@ -41,7 +40,7 @@ class Severity(str, Enum):
         }[self]
 
 
-class Confidence(str, Enum):
+class Confidence(StrEnum):
     CONFIRMED = "CONFIRMED"  # Deterministic — the pattern exists verbatim
     SUSPECTED = "SUSPECTED"  # Heuristic — absence-of-safeguard or fuzzy match
 

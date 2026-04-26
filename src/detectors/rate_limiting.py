@@ -9,7 +9,6 @@ LLM API calls — a prerequisite for unbounded consumption attacks.
 from __future__ import annotations
 
 import re
-from pathlib import Path
 
 from src.detectors.base import BaseDetector, ScanContext
 from src.models import Confidence, Finding, Severity

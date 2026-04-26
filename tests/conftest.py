@@ -6,8 +6,6 @@ import ast
 import textwrap
 from pathlib import Path
 
-import pytest
-
 from src.detectors.base import ScanContext
 from src.models import ScanConfig, Severity
 

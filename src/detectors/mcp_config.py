@@ -144,13 +144,7 @@ class MCPConfigDetector(BaseDetector):
                 )
 
         # 2. Missing authentication
-        has_auth = any(
-            k.lower() in AUTH_KEYS or v
-            for d in [env, cfg]
-            for k, v in d.items()
-            if isinstance(d, dict)
-        )
-        # More precise: check env for token/key values
+        # Check env for token/key values
         env_has_auth = any(k.lower() in AUTH_KEYS for k in env)
         cfg_has_auth = any(k.lower() in AUTH_KEYS for k in cfg)
 

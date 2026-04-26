@@ -5,7 +5,7 @@ from __future__ import annotations
 import pytest
 
 from src.detectors.code_execution import CodeExecutionDetector
-from src.models import Confidence, Severity
+from src.models import Severity
 from tests.conftest import make_context
 
 
