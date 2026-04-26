@@ -2,6 +2,11 @@
 
 **Zero-config, fully local static security scanner for AI agents.**
 
+[![CI](https://github.com/Prnvlol/agent-risk-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/Prnvlol/agent-risk-analyzer/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/arascan)](https://pypi.org/project/arascan/)
+[![Python](https://img.shields.io/pypi/pyversions/arascan)](https://pypi.org/project/arascan/)
+[![License](https://img.shields.io/github/license/Prnvlol/agent-risk-analyzer)](LICENSE)
+
 ARA detects **20 vulnerability categories** across LangChain, CrewAI, AutoGen, and MCP agent projects — no API keys, no cloud, no LLM required.
 
 ```
@@ -37,14 +42,19 @@ $ ara scan ./my-agent
 ## 📦 Installation
 
 ```bash
-# Clone the repo
+pip install arascan
+```
+
+> **Requires Python 3.11+**
+
+For development:
+
+```bash
 git clone https://github.com/Prnvlol/agent-risk-analyzer.git
 cd agent-risk-analyzer
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 ```
-
-> **Requires Python 3.11+**
 
 ---
 
@@ -206,8 +216,19 @@ mypy src/
 - [ ] **Framework-specific detectors** — deep checks for LangChain, CrewAI, AutoGen patterns
 - [ ] **`--deep` mode** — optional local LLM analysis via Ollama for semantic prompt review
 - [ ] **GitHub Actions workflow** — pre-built CI action
-- [ ] **PyPI release** — `pip install agent-risk-analyzer`
+- [x] **PyPI release** — `pip install arascan`
 - [ ] **VS Code extension** — inline findings in the editor
+
+---
+
+## 🔗 Related
+
+| Tool | What it does |
+|---|---|
+| **ARA** (this) | Static scanner — find vulnerabilities before deployment |
+| **[parry-ai](https://github.com/Prnvlol/parry)** | Runtime guardrail — block threats while your agent is running |
+
+> Use ARA to find the issues. Use parry to fix them at runtime.
 
 ---
 
