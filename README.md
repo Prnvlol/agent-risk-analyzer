@@ -232,6 +232,16 @@ mypy src/
 
 ---
 
+## 🤝 Community
+
+- [Contributing](CONTRIBUTING.md) — setup, checks, detector guidelines, and pull request expectations
+- [Security policy](SECURITY.md) — private vulnerability reporting process
+- [Issues](https://github.com/Prnvlol/agent-risk-analyzer/issues) — bug reports, rule requests, and framework support requests
+
+ARA is early alpha. Reports with minimal vulnerable examples are especially useful: false negatives, false positives, framework-specific patterns, and CI/reporting friction all help shape the roadmap.
+
+---
+
 ## 📄 License
 
 [MIT](LICENSE)

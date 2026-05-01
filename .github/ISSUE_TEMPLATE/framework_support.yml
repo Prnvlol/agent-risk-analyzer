@@ -1,0 +1,33 @@
+name: Framework support
+description: Request deeper support for an agent framework, SDK, or project layout.
+title: "[Framework]: "
+labels: ["enhancement", "framework"]
+body:
+  - type: input
+    id: framework
+    attributes:
+      label: Framework or SDK
+      placeholder: "LangChain, CrewAI, AutoGen, MCP, OpenAI Agents SDK..."
+    validations:
+      required: true
+  - type: textarea
+    id: patterns
+    attributes:
+      label: Patterns to scan
+      description: What code, config, prompts, tools, or files should ARA understand?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example project structure or code
+      render: text
+    validations:
+      required: false
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired findings
+      description: What risks should ARA report for this framework?
+    validations:
+      required: true

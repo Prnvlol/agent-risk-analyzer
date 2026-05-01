@@ -1,0 +1,66 @@
+name: Bug report
+description: Report incorrect behavior, crashes, or confusing scanner output.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for helping improve ARA. Please include a minimal reproduction when possible.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: Paste the smallest file, project layout, command, or output that reproduces the issue.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect ARA to do?
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What did ARA do instead?
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: ARA version
+      placeholder: "0.1.0"
+    validations:
+      required: false
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "3.12"
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Scanner
+        - CLI
+        - Detector
+        - JSON report
+        - Markdown report
+        - CI mode
+        - Documentation
+        - Other
+    validations:
+      required: true
