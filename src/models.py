@@ -104,7 +104,7 @@ class ScanResult(BaseModel):
     framework_detected: str | None = None
     grade: str = "A"
     score: int = 0
-    ara_version: str = "0.1.0"
+    ara_version: str = "0.2.0"
     metadata: dict[str, Any] = Field(default_factory=dict)
 
     @property

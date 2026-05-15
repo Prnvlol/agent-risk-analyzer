@@ -7,6 +7,20 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.2.0] — 2026-05-15
+
+### Added
+- Framework-specific detector coverage:
+  - LangChain FAISS unsafe deserialization and explicit unbounded agent iteration settings
+  - CrewAI unsafe code execution and delegation without runtime boundaries
+  - AutoGen unsandboxed code execution and explicit unbounded group chat rounds
+- Focused framework detector tests and smoke verification coverage for risky and safe examples
+
+### Changed
+- Tightened shared detector/config typing so `mypy src` passes cleanly for the release
+
+---
+
 ## [0.1.0] — 2026-04-20
 
 ### Added

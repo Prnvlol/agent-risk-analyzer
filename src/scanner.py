@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import ast
 import time
+from collections.abc import Iterator
 from pathlib import Path
 
 from src.detectors import ALL_DETECTORS
@@ -113,7 +114,7 @@ class Scanner:
 
         return context
 
-    def _walk(self, root: Path):
+    def _walk(self, root: Path) -> Iterator[Path]:
         """Yield all scannable files under root, skipping SKIP_DIRS."""
         for item in root.rglob("*"):
             if item.is_file():

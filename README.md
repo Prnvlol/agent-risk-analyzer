@@ -168,9 +168,15 @@ src/
     ├── tool_permissions.py  # VULN-005/007/011/018/020
     ├── mcp_config.py    # VULN-009: MCP misconfigurations
     ├── multi_agent.py   # VULN-006/008/015
+    ├── framework_specific.py  # VULN-003/006/015/020: LangChain/CrewAI/AutoGen
     ├── logging_detector.py  # VULN-012/016
     └── rate_limiting.py     # VULN-013
 ```
+
+**0.2.0 framework coverage:**
+- **LangChain** — unsafe FAISS deserialization and explicit unbounded agent loops
+- **CrewAI** — unsafe code execution and delegation without runtime boundaries
+- **AutoGen** — unsandboxed code execution and explicit unbounded group chat rounds
 
 **Design principles:**
 - **No LLM dependency** — all detection is deterministic (AST + regex)
@@ -213,7 +219,7 @@ mypy src/
 
 ## 🗺️ Roadmap
 
-- [ ] **Framework-specific detectors** — deep checks for LangChain, CrewAI, AutoGen patterns
+- [x] **Framework-specific detectors** — LangChain, CrewAI, and AutoGen security patterns
 - [ ] **`--deep` mode** — optional local LLM analysis via Ollama for semantic prompt review
 - [ ] **GitHub Actions workflow** — pre-built CI action
 - [x] **PyPI release** — `pip install arascan`

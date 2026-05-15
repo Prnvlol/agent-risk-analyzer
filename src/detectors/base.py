@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from src.models import Finding, ScanConfig
+from src.models import Confidence, Finding, ScanConfig, Severity
 
 
 @dataclass
@@ -90,8 +90,8 @@ class BaseDetector(ABC):
         *,
         vuln_id: str,
         title: str,
-        severity: Finding.__class__,  # type: ignore[assignment]
-        confidence: Finding.__class__,  # type: ignore[assignment]
+        severity: Severity,
+        confidence: Confidence,
         description: str,
         file_path: Path,
         line_number: int | None = None,
@@ -111,8 +111,8 @@ class BaseDetector(ABC):
         return Finding(
             vuln_id=vuln_id,
             title=title,
-            severity=severity,  # type: ignore[arg-type]
-            confidence=confidence,  # type: ignore[arg-type]
+            severity=severity,
+            confidence=confidence,
             description=description,
             file_path=rel,
             line_number=line_number,

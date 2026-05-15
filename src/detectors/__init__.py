@@ -2,6 +2,7 @@
 
 from src.detectors.code_execution import CodeExecutionDetector
 from src.detectors.credentials import CredentialsDetector
+from src.detectors.framework_specific import FrameworkSpecificDetector
 from src.detectors.logging_detector import LoggingDetector
 from src.detectors.mcp_config import MCPConfigDetector
 from src.detectors.multi_agent import MultiAgentDetector
@@ -16,6 +17,7 @@ ALL_DETECTORS = [
     ToolPermissionsDetector(),
     MCPConfigDetector(),
     MultiAgentDetector(),
+    FrameworkSpecificDetector(),
     LoggingDetector(),
     RateLimitingDetector(),
 ]

@@ -15,8 +15,9 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
+from typing import Any
 
-import yaml
+import yaml  # type: ignore[import-untyped]
 
 from src.detectors.base import BaseDetector, ScanContext
 from src.models import Confidence, Finding, Severity
@@ -73,33 +74,36 @@ class MCPConfigDetector(BaseDetector):
 
     # ------------------------------------------------------------------
 
-    def _parse(self, content: str, path: Path) -> dict | None:  # type: ignore[type-arg]
+    def _parse(self, content: str, path: Path) -> dict[str, Any] | None:
         try:
             if path.suffix == ".json":
-                return json.loads(content)  # type: ignore[no-any-return]
-            return yaml.safe_load(content)  # type: ignore[no-any-return]
+                parsed = json.loads(content)
+            else:
+                parsed = yaml.safe_load(content)
         except Exception:
             return None
 
+        return parsed if isinstance(parsed, dict) else None
+
     def _check_mcp_config(
         self,
-        config: dict,  # type: ignore[type-arg]
+        config: dict[str, Any],
         path: Path,
         context: ScanContext,
     ) -> list[Finding]:
         findings: list[Finding] = []
 
         # MCP config structure: {"mcpServers": {"server-name": {...}}}
-        servers: dict = config.get("mcpServers", config)  # type: ignore[type-arg]
+        servers = config.get("mcpServers", config)
         if not isinstance(servers, dict):
             return findings
 
-        for server_name, server_cfg in servers.items():
+        for server_name_raw, server_cfg in servers.items():
             if not isinstance(server_cfg, dict):
                 continue
 
             findings.extend(
-                self._check_server(server_name, server_cfg, path, context)
+                self._check_server(str(server_name_raw), server_cfg, path, context)
             )
 
         return findings
@@ -107,15 +111,20 @@ class MCPConfigDetector(BaseDetector):
     def _check_server(
         self,
         name: str,
-        cfg: dict,  # type: ignore[type-arg]
+        cfg: dict[str, Any],
         path: Path,
         context: ScanContext,
     ) -> list[Finding]:
         findings: list[Finding] = []
 
-        args: list = cfg.get("args", [])
-        env: dict = cfg.get("env", {})  # type: ignore[type-arg]
-        permissions: list | str = cfg.get("permissions", [])
+        args_value = cfg.get("args", [])
+        args: list[Any] = args_value if isinstance(args_value, list) else []
+        env_value = cfg.get("env", {})
+        env: dict[str, Any] = env_value if isinstance(env_value, dict) else {}
+        permissions_value = cfg.get("permissions", [])
+        permissions: list[Any] | str = (
+            permissions_value if isinstance(permissions_value, list | str) else []
+        )
 
         # 1. Broad filesystem paths in args
         for arg in args:
